@@ -1,6 +1,7 @@
 package es.deusto.onthestreet;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Place implements Serializable {
 
@@ -8,13 +9,15 @@ public class Place implements Serializable {
 	private String name;
 	private String description;
 	private String location;
+	private ArrayList<Contact> relatedContacts;
 	
 	
-	public Place(String name, String description, String location){
+	public Place(String name, String description, String location,ArrayList<Contact>relatedContacts){
 		super();
 		this.name = name;
 		this.description = description;
 		this.location = location;
+		this.relatedContacts=relatedContacts;
 	}
 	public String getName() {
 		return name;
@@ -33,6 +36,16 @@ public class Place implements Serializable {
 	}
 	public void setLocation(String location) {
 		this.location = location;
+	}
+	
+	public ArrayList<Contact> getRelatedContacts() {
+		return relatedContacts;
+	}
+	public void setRelatedContacts(ArrayList<Contact> relatedContacts) {
+		this.relatedContacts = relatedContacts;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	@Override
 	public String toString(){

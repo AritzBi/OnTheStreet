@@ -7,17 +7,36 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="es.deusto.onthestreet.MainActivity" >
-
     <EditText
-        android:id="@+id/edtItemDescription"
+        android:id="@+id/edtItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:ems="10"
-        android:hint="@string/label_item_description" >
+        android:hint="@string/label_item_name" >
 
         <requestFocus />
     </EditText>
+
+        <EditText
+            android:id="@+id/edtItemDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/edtItemName"
+            android:layout_below="@+id/edtItemName"
+            android:layout_marginTop="25dp"
+            android:ems="10"
+            android:hint="@string/label_item_description" />
+
+        <EditText
+            android:id="@+id/edtItemLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/edtItemDescription"
+            android:layout_below="@+id/edtItemDescription"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="@string/label_item_location" />
 
 </RelativeLayout>
