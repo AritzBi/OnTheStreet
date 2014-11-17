@@ -3,6 +3,8 @@ package es.deusto.onthestreet;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import android.net.Uri;
+
 public class Place implements Serializable {
 
 	private static final long serialVersionUID = 1L;

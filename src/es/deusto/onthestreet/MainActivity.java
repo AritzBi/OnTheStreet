@@ -1,10 +1,14 @@
 package es.deusto.onthestreet;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ActionMode;
@@ -13,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -31,14 +36,27 @@ public class MainActivity extends ListActivity {
         //setContentView(R.layout.activity_main);
         this.createPlaceList();
         //adpPlaces = new ArrayAdapter<Place>(this, android.R.layout.simple_list_item_1, arrPlaces);
-		adpPlaces = new ArrayAdapter<Place>(this, android.R.layout.simple_list_item_activated_2, android.R.id.text1, arrPlaces) {
+		adpPlaces = new ArrayAdapter<Place>(this, R.layout.image_list, R.id.place_name,arrPlaces) {
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				View view = super.getView(position, convertView, parent);
-				TextView text1 = (TextView) view.findViewById(android.R.id.text1);
-				TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+				TextView text1 = (TextView) view.findViewById(R.id.place_name);
+				TextView text2 = (TextView) view.findViewById(R.id.place_location);
 				text1.setText(arrPlaces.get(position).getName());
 				text2.setText(arrPlaces.get(position).getLocation());
+				System.out.println(arrPlaces.get(position).getUri());
+				File imgFile=new File(arrPlaces.get(position).getUri());
+				System.out.println("Antes de exists");
+				System.out.println(imgFile);
+				if(imgFile.exists()){
+					System.out.println("Paso por aqui");
+					//Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+					ImageView myImage = (ImageView) view.findViewById(R.id.icon_image);
+					//myImage.setImageBitmap(myBitmap);
+					System.out.println(myImage);
+					System.out.println(Uri.fromFile(imgFile));
+					myImage.setImageURI(Uri.fromFile(imgFile));
+				}
 				return view;
 			}
 		};
@@ -97,6 +115,7 @@ public class MainActivity extends ListActivity {
 		if (requestCode == ADD_ITEM){ // If it was an ADD_ITEM, then add the new item and update the list
 			if(resultCode == Activity.RESULT_OK){
 				Place place=(Place)data.getExtras().getSerializable(Place.PLACE);
+				System.out.println(place);
 				arrPlaces.add(place);
 				adpPlaces.notifyDataSetChanged();
 			}		
