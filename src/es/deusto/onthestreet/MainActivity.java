@@ -2,9 +2,6 @@ package es.deusto.onthestreet;
 
 import java.util.ArrayList;
 
-
-
-
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -14,8 +11,10 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 public class MainActivity extends ListActivity {
@@ -31,7 +30,18 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
         this.createPlaceList();
-        adpPlaces = new ArrayAdapter<Place>(this, android.R.layout.simple_list_item_1, arrPlaces);
+        //adpPlaces = new ArrayAdapter<Place>(this, android.R.layout.simple_list_item_1, arrPlaces);
+		adpPlaces = new ArrayAdapter<Place>(this, android.R.layout.simple_list_item_activated_2, android.R.id.text1, arrPlaces) {
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
+				View view = super.getView(position, convertView, parent);
+				TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+				TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+				text1.setText(arrPlaces.get(position).getName());
+				text2.setText(arrPlaces.get(position).getLocation());
+				return view;
+			}
+		};
         setListAdapter(adpPlaces);
         getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         
@@ -68,7 +78,8 @@ public class MainActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) { 
     	super.onListItemClick(l, v, position, id); 
 		Intent itemDetailIntent = new Intent(this, PlaceDetailActivity.class);
-		itemDetailIntent.putExtra(PlaceCreateActivity.PLACE, arrPlaces.get(position));
+		itemDetailIntent.putExtra(Place.PLACE, position);
+		itemDetailIntent.putExtra(Place.ARRAY, arrPlaces);
 		startActivityForResult(itemDetailIntent, VIEW_ITEM);
   
     } 
@@ -85,7 +96,7 @@ public class MainActivity extends ListActivity {
 		
 		if (requestCode == ADD_ITEM){ // If it was an ADD_ITEM, then add the new item and update the list
 			if(resultCode == Activity.RESULT_OK){
-				Place place=(Place)data.getExtras().getSerializable(PlaceCreateActivity.PLACE);
+				Place place=(Place)data.getExtras().getSerializable(Place.PLACE);
 				arrPlaces.add(place);
 				adpPlaces.notifyDataSetChanged();
 			}		
@@ -93,6 +104,8 @@ public class MainActivity extends ListActivity {
 			if(resultCode == Activity.RESULT_OK){
 
 			}		
+		}else if(requestCode == VIEW_ITEM){
+			 createPlaceList();
 		}
 	}
 }

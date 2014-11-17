@@ -6,10 +6,14 @@ import java.util.ArrayList;
 public class Place implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	protected static String PLACE="place";
+	protected static String ARRAY="array";
+	protected static String PLACE_POSITION="position";
 	private String name;
 	private String description;
 	private String location;
 	private ArrayList<Contact> relatedContacts;
+	private String uri;
 	
 	
 	public Place(String name, String description, String location,ArrayList<Contact>relatedContacts){
@@ -46,6 +50,32 @@ public class Place implements Serializable {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+	
+	public static String getPLACE() {
+		return PLACE;
+	}
+	public static void setPLACE(String pLACE) {
+		PLACE = pLACE;
+	}
+	public static String getARRAY() {
+		return ARRAY;
+	}
+	public static void setARRAY(String aRRAY) {
+		ARRAY = aRRAY;
+	}
+	public static String getPLACE_POSITION() {
+		return PLACE_POSITION;
+	}
+	public static void setPLACE_POSITION(String pLACE_POSITION) {
+		PLACE_POSITION = pLACE_POSITION;
+	}
+	public String getUri() {
+		return uri;
+	}
+	public void setUri(String uri) {
+		this.uri = uri;
 	}
 	@Override
 	public String toString(){

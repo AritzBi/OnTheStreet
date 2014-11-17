@@ -1081,8 +1081,9 @@ containing a value of this type.
         public static final int ic_action_add_person=0x7f020058;
         public static final int ic_action_cancel=0x7f020059;
         public static final int ic_action_new=0x7f02005a;
-        public static final int ic_action_settings=0x7f02005b;
-        public static final int ic_launcher=0x7f02005c;
+        public static final int ic_action_new_picture=0x7f02005b;
+        public static final int ic_action_settings=0x7f02005c;
+        public static final int ic_launcher=0x7f02005d;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
@@ -1093,12 +1094,13 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f050023;
         public static final int action_bar_title=0x7f050022;
         public static final int action_context_bar=0x7f05001d;
-        public static final int action_item_accept=0x7f050041;
-        public static final int action_item_cancel=0x7f050042;
+        public static final int action_item_accept=0x7f050042;
+        public static final int action_item_cancel=0x7f050043;
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_settings=0x7f050043;
+        public static final int action_new_picture=0x7f050041;
+        public static final int action_settings=0x7f050044;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
@@ -1108,7 +1110,6 @@ containing a value of this type.
         public static final int dialog=0x7f05000e;
         public static final int disableHome=0x7f050008;
         public static final int dropdown=0x7f05000f;
-        public static final int editDescription=0x7f05003c;
         public static final int edit_query=0x7f050030;
         public static final int edtItemDescription=0x7f05003f;
         public static final int edtItemLocation=0x7f050040;
@@ -1125,8 +1126,8 @@ containing a value of this type.
         public static final int listMode=0x7f050001;
         public static final int list_item=0x7f050029;
         public static final int middle=0x7f050012;
-        public static final int mnu_add_place=0x7f050044;
-        public static final int mnu_add_student=0x7f050045;
+        public static final int mnu_add_place=0x7f050045;
+        public static final int mnu_add_student=0x7f050046;
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
@@ -1152,6 +1153,7 @@ containing a value of this type.
         public static final int tabMode=0x7f050002;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
+        public static final int txtDescription=0x7f05003c;
         public static final int up=0x7f050021;
         public static final int useLogo=0x7f050003;
         public static final int withText=0x7f05000c;
@@ -1258,6 +1260,7 @@ containing a value of this type.
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
         public static final int action_item_accept=0x7f0a0016;
         public static final int action_item_cancel=0x7f0a0017;
+        public static final int action_new_picture=0x7f0a0019;
         public static final int action_settings=0x7f0a000f;
         public static final int add_place=0x7f0a0010;
         public static final int add_student=0x7f0a0018;

@@ -22,13 +22,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PlaceCreateActivity"
-            android:label="@string/title_activity_place_create"
-            >
+        <activity
+            android:name=".PlaceCreateActivity"
+            android:label="@string/title_activity_place_create" >
         </activity>
-        <activity android:name=".PlaceDetailActivity"
-            android:label="@string/title_activity_place_detail"
-            >
+        <activity
+            android:name=".PlaceDetailActivity"
+            android:label="@string/title_activity_place_detail" >
         </activity>
     </application>
 

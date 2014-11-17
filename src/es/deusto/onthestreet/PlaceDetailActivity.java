@@ -4,6 +4,9 @@ package es.deusto.onthestreet;
 
 
 
+
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,20 +16,31 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class PlaceDetailActivity extends Activity{
 	private Place place;
+	private int placePosition;
+	private ArrayList<Place> arrPlaces;
 	private ArrayAdapter<Contact> adpContacts;
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
 		
-		EditText edtDescription = ((EditText) findViewById(R.id.editDescription));
-		place=(Place) getIntent().getSerializableExtra(PlaceCreateActivity.PLACE);
+		TextView edtDescription = ((TextView) findViewById(R.id.txtDescription));
+		ListView listContact=((ListView)findViewById(R.id.listContacts));
+		placePosition= (Integer) getIntent().getSerializableExtra(Place.PLACE);
+		arrPlaces=(ArrayList<Place>)getIntent().getSerializableExtra(Place.ARRAY);
+		place=arrPlaces.get(placePosition);
+		//place=(Place) getIntent().getSerializableExtra(PlaceCreateActivity.PLACE);
 		if(place != null){
 			edtDescription.setText(place.getDescription());
+			adpContacts = new ArrayAdapter<Contact>(this, android.R.layout.simple_list_item_1,place.getRelatedContacts());
+			listContact.setAdapter(adpContacts);
+			listContact.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		}
 	}
 	
@@ -59,6 +73,8 @@ public class PlaceDetailActivity extends Activity{
 					Log.i("Intent:",data.getDataString());
 					place.getRelatedContacts().add(new Contact(cursor.getString(0), cursor.getString(1)));
 					adpContacts.notifyDataSetChanged();
+					arrPlaces.set(placePosition, place);
+			    	(new PlaceManager(getApplicationContext())).savePlaces(arrPlaces);
 					return;
 				}
 			}
@@ -66,4 +82,10 @@ public class PlaceDetailActivity extends Activity{
 				// Recommended
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+    @Override
+    public void onStop(){
+    	super.onStop();
+    	Log.i("Stop", "Saving Data");
+
+    }
 }

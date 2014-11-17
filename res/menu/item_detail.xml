@@ -1,5 +1,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/action_item_accept" android:icon="@drawable/ic_action_accept" android:showAsAction="always" android:orderInCategory="1" android:title="@string/action_item_accept"></item>
-    <item android:id="@+id/action_item_cancel" android:icon="@drawable/ic_action_cancel" android:showAsAction="always" android:orderInCategory="2" android:title="@string/action_item_cancel"></item>
+
+    <item
+        android:id="@+id/action_new_picture"
+        android:icon="@drawable/ic_action_new_picture"
+        android:orderInCategory="1"
+        android:showAsAction="always"
+        android:title="@string/action_new_picture">
+    </item>
+    <item
+        android:id="@+id/action_item_accept"
+        android:icon="@drawable/ic_action_accept"
+        android:orderInCategory="2"
+        android:showAsAction="always"
+        android:title="@string/action_item_accept">
+    </item>
+    <item
+        android:id="@+id/action_item_cancel"
+        android:icon="@drawable/ic_action_cancel"
+        android:orderInCategory="3"
+        android:showAsAction="always"
+        android:title="@string/action_item_cancel">
+    </item>
 
 </menu>
