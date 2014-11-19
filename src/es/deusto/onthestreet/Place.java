@@ -17,7 +17,13 @@ public class Place implements Serializable {
 	private ArrayList<Contact> relatedContacts;
 	private String uri;
 	
-	
+	public Place(){
+		super();
+		this.name = "";
+		this.description = "";
+		this.location = "";
+		this.relatedContacts=new ArrayList<Contact>();
+	}
 	public Place(String name, String description, String location,ArrayList<Contact>relatedContacts){
 		super();
 		this.name = name;

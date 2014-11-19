@@ -237,10 +237,12 @@ int drawable abc_textfield_searchview_right_holo_light 0x7f020056
 int drawable ic_action_accept 0x7f020057
 int drawable ic_action_add_person 0x7f020058
 int drawable ic_action_cancel 0x7f020059
-int drawable ic_action_new 0x7f02005a
-int drawable ic_action_new_picture 0x7f02005b
-int drawable ic_action_settings 0x7f02005c
-int drawable ic_launcher 0x7f02005d
+int drawable ic_action_discard 0x7f02005a
+int drawable ic_action_edit 0x7f02005b
+int drawable ic_action_new 0x7f02005c
+int drawable ic_action_new_picture 0x7f02005d
+int drawable ic_action_settings 0x7f02005e
+int drawable ic_launcher 0x7f02005f
 int id action_bar 0x7f05001c
 int id action_bar_activity_content 0x7f050015
 int id action_bar_container 0x7f05001b
@@ -284,6 +286,8 @@ int id list_item 0x7f050029
 int id middle 0x7f050012
 int id mnu_add_place 0x7f050048
 int id mnu_add_student 0x7f050049
+int id mnu_student_delete 0x7f05004b
+int id mnu_student_edit 0x7f05004a
 int id never 0x7f050009
 int id none 0x7f050010
 int id normal 0x7f050000
@@ -347,6 +351,7 @@ int layout support_simple_spinner_dropdown_item 0x7f03001b
 int menu item_detail 0x7f0c0000
 int menu main 0x7f0c0001
 int menu member_list 0x7f0c0002
+int menu place_action 0x7f0c0003
 int string abc_action_bar_home_description 0x7f0a0001
 int string abc_action_bar_up_description 0x7f0a0002
 int string abc_action_menu_overflow_description 0x7f0a0003
@@ -364,6 +369,8 @@ int string action_item_accept 0x7f0a0016
 int string action_item_cancel 0x7f0a0017
 int string action_new_picture 0x7f0a0019
 int string action_settings 0x7f0a000f
+int string action_student_delete 0x7f0a001b
+int string action_student_edit 0x7f0a001a
 int string add_place 0x7f0a0010
 int string add_student 0x7f0a0018
 int string app_name 0x7f0a000d

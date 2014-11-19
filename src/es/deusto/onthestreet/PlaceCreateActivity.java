@@ -17,15 +17,28 @@ import android.widget.EditText;
 
 public class PlaceCreateActivity extends Activity {
 	private File file;
+	private Place place;
+	private Integer editPosition;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
 		// If item description provided, fill the EditText widget
-		EditText edtDescription = ((EditText) findViewById(R.id.edtItemDescription));
-		EditText edtName = ((EditText) findViewById(R.id.edtItemName));
-		EditText edtLocation = ((EditText) findViewById(R.id.edtItemLocation));
+
+		place= (Place) getIntent().getSerializableExtra(Place.PLACE);
+		if(place!=null){
+			EditText edtDescription = ((EditText) findViewById(R.id.edtItemDescription));
+			EditText edtName = ((EditText) findViewById(R.id.edtItemName));
+			EditText edtLocation = ((EditText) findViewById(R.id.edtItemLocation));
+			edtDescription.setText(place.getDescription());
+			edtName.setText(place.getName());
+			edtLocation.setText(place.getLocation());
+		}else{
+			place=new Place();
+		}
+		editPosition=(Integer) getIntent().getSerializableExtra(Place.PLACE_POSITION);
+
 	}
 
 	@Override
@@ -43,18 +56,21 @@ public class PlaceCreateActivity extends Activity {
 		case R.id.action_item_accept:
 			String description = ((EditText) findViewById(R.id.edtItemDescription))
 					.getText().toString();
-			String name = ((EditText) findViewById(R.id.edtItemDescription))
+			String name = ((EditText) findViewById(R.id.edtItemName))
 					.getText().toString();
-			String location = ((EditText) findViewById(R.id.edtItemDescription))
+			String location = ((EditText) findViewById(R.id.edtItemLocation))
 					.getText().toString();
 
-			Place place = new Place(name, description, location,
-					new ArrayList<Contact>());
+			place.setDescription(description);
+			place.setLocation(location);
+			place.setName(name);
 			if(file !=null){
 				place.setUri(getRealPathFromURI(Uri.fromFile(file)));;
 			}
 			Intent intentResult = new Intent();
 			intentResult.putExtra(Place.PLACE, place);
+			if(editPosition!=null)
+				intentResult.putExtra(Place.PLACE_POSITION, editPosition);
 			setResult(Activity.RESULT_OK, intentResult);
 			finish();
 			break;

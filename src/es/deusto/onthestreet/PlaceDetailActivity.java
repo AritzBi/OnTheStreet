@@ -32,7 +32,7 @@ public class PlaceDetailActivity extends Activity{
 		
 		TextView edtDescription = ((TextView) findViewById(R.id.txtDescription));
 		ListView listContact=((ListView)findViewById(R.id.listContacts));
-		placePosition= (Integer) getIntent().getSerializableExtra(Place.PLACE);
+		placePosition= (Integer) getIntent().getSerializableExtra(Place.PLACE_POSITION);
 		arrPlaces=(ArrayList<Place>)getIntent().getSerializableExtra(Place.ARRAY);
 		place=arrPlaces.get(placePosition);
 		//place=(Place) getIntent().getSerializableExtra(PlaceCreateActivity.PLACE);

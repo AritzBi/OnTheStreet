@@ -14,5 +14,7 @@
     <string name="action_item_cancel">Cancel</string>
     <string name="add_student">Add student</string>
     <string name="action_new_picture">New picture</string>
+    <string name="action_student_edit">Edit student</string>
+    <string name="action_student_delete">Delete student</string>
 
 </resources>

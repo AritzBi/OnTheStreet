@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/mnu_student_edit" android:title="@string/action_student_edit" android:icon="@drawable/ic_action_edit"></item>
+    <item android:id="@+id/mnu_student_delete" android:title="@string/action_student_delete" android:icon="@drawable/ic_action_discard"></item>
+        
+
+</menu>

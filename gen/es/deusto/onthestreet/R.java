@@ -1080,10 +1080,12 @@ containing a value of this type.
         public static final int ic_action_accept=0x7f020057;
         public static final int ic_action_add_person=0x7f020058;
         public static final int ic_action_cancel=0x7f020059;
-        public static final int ic_action_new=0x7f02005a;
-        public static final int ic_action_new_picture=0x7f02005b;
-        public static final int ic_action_settings=0x7f02005c;
-        public static final int ic_launcher=0x7f02005d;
+        public static final int ic_action_discard=0x7f02005a;
+        public static final int ic_action_edit=0x7f02005b;
+        public static final int ic_action_new=0x7f02005c;
+        public static final int ic_action_new_picture=0x7f02005d;
+        public static final int ic_action_settings=0x7f02005e;
+        public static final int ic_launcher=0x7f02005f;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
@@ -1129,6 +1131,8 @@ containing a value of this type.
         public static final int middle=0x7f050012;
         public static final int mnu_add_place=0x7f050048;
         public static final int mnu_add_student=0x7f050049;
+        public static final int mnu_student_delete=0x7f05004b;
+        public static final int mnu_student_edit=0x7f05004a;
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
@@ -1220,6 +1224,7 @@ containing a value of this type.
         public static final int item_detail=0x7f0c0000;
         public static final int main=0x7f0c0001;
         public static final int member_list=0x7f0c0002;
+        public static final int place_action=0x7f0c0003;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1266,6 +1271,8 @@ containing a value of this type.
         public static final int action_item_cancel=0x7f0a0017;
         public static final int action_new_picture=0x7f0a0019;
         public static final int action_settings=0x7f0a000f;
+        public static final int action_student_delete=0x7f0a001b;
+        public static final int action_student_edit=0x7f0a001a;
         public static final int add_place=0x7f0a0010;
         public static final int add_student=0x7f0a0018;
         public static final int app_name=0x7f0a000d;
