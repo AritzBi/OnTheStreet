@@ -1,39 +1,63 @@
 package es.deusto.onthestreet;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.LocationClient;
 
 public class PlaceCreateActivity extends Activity {
 	private File file;
 	private Place place;
 	private Integer editPosition;
+	private ProgressBar barConnectivity;
+	private EditText txtLat;
+	private EditText txtLon;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		txtLat=(EditText) findViewById(R.id.txtLat);
+		txtLon=(EditText) findViewById(R.id.txtLon);
+		//barConnectivity = (ProgressBar) findViewById(R.id.barConnection);
+		//barConnectivity.setMax(100);
+		//barConnectivity.setVisibility(View.GONE);
 		// If item description provided, fill the EditText widget
 
 		place= (Place) getIntent().getSerializableExtra(Place.PLACE);
 		if(place!=null){
 			EditText edtDescription = ((EditText) findViewById(R.id.edtItemDescription));
 			EditText edtName = ((EditText) findViewById(R.id.edtItemName));
-			EditText edtLocation = ((EditText) findViewById(R.id.edtItemLocation));
 			edtDescription.setText(place.getDescription());
 			edtName.setText(place.getName());
-			edtLocation.setText(place.getLocation());
+			txtLat.setText(place.getLat()+"");
+			txtLon.setText(place.getLon()+"");
 		}else{
 			place=new Place();
 		}
@@ -58,11 +82,10 @@ public class PlaceCreateActivity extends Activity {
 					.getText().toString();
 			String name = ((EditText) findViewById(R.id.edtItemName))
 					.getText().toString();
-			String location = ((EditText) findViewById(R.id.edtItemLocation))
-					.getText().toString();
 
 			place.setDescription(description);
-			place.setLocation(location);
+			place.setLat(Double.parseDouble(txtLat.getText().toString()));
+			place.setLon(Double.parseDouble(txtLon.getText().toString()));
 			place.setName(name);
 			if(file !=null){
 				place.setUri(getRealPathFromURI(Uri.fromFile(file)));;
@@ -82,6 +105,9 @@ public class PlaceCreateActivity extends Activity {
 			break;
 		case R.id.action_new_picture:
 			intentTakePicture();
+			break;
+		case R.id.action_get_location:
+			this.getLocation();
 			break;
 		}
 
@@ -121,5 +147,76 @@ public class PlaceCreateActivity extends Activity {
 			}
 		}
 	}
+	private void getLocation(){
+		// First check if there is connectivity
+		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
+	    if (networkInfo != null && networkInfo.isConnected()) {
+			// OK -> Access the Internet
+	    	txtLat.setVisibility(View.GONE);
+	    	txtLon.setVisibility(View.GONE);
+	    	//barConnectivity.setProgress(30);
+	    	//barConnectivity.setVisibility(View.VISIBLE);
+	    	new GetLocation().execute();
+	    } else {
+			// No -> Display error message
+	        Toast.makeText(this, R.string.msg_error_no_connection, Toast.LENGTH_SHORT).show();
+	    }		
+	}
+	// Convenience class to access the Internet and update UI elements
+	private class GetLocation extends AsyncTask<String, Void, double[]> implements
+	GooglePlayServicesClient.ConnectionCallbacks,
+	GooglePlayServicesClient.OnConnectionFailedListener{
+	
+		private LocationClient mLocationClient;
+		
+		@Override
+		protected double[] doInBackground(String... params) {
+			if(GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext()) != ConnectionResult.SUCCESS){
+				return null;
+			}
+			
+	        mLocationClient = new LocationClient(getApplicationContext(), this, this);
+	        mLocationClient.connect(); // Emulators with no Google Play support will fail at this point
+	        
+	        // Wait until connection
+	        while(!mLocationClient.isConnected());
+	        
+			Location loc = mLocationClient.getLastLocation();
+			
+			double [] coordinates={loc.getLatitude(),loc.getLongitude()};
+	        return coordinates;
+		}
+	
+		@Override
+		protected void onPostExecute(double [] coordinates) {
+			txtLat.setVisibility(View.VISIBLE);
+			txtLon.setVisibility(View.VISIBLE);
+			if(coordinates == null)
+				Toast.makeText(getApplicationContext(), R.string.msg_error_server, Toast.LENGTH_SHORT).show();
+			else{
+				txtLat.setText(coordinates[0]+"");
+				txtLon.setText(coordinates[1]+"");
+			}
+		}
+	
+		@Override
+		public void onConnectionFailed(ConnectionResult arg0) {
+			Log.i("Location client", "Connection failed");		
+		}
+
+		@Override
+		public void onConnected(Bundle arg0) {
+			Log.i("Location client", "Connected");
+			// Normally, we will perform the actions here, but from this place we cannot access UI elements
+		}
+
+		@Override
+		public void onDisconnected() {
+			Log.i("Location client", "Disconnected");		
+		}
+
+		
+	}
 }

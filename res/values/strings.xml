@@ -14,7 +14,14 @@
     <string name="action_item_cancel">Cancel</string>
     <string name="add_student">Add student</string>
     <string name="action_new_picture">New picture</string>
-    <string name="action_student_edit">Edit student</string>
-    <string name="action_student_delete">Delete student</string>
-
+    <string name="action_student_edit">Edit place</string>
+    <string name="action_student_delete">Delete place</string>
+	<string name="action_share">Share place</string>
+	<string name="msg_error_server">Location server unavailable</string>	
+	<string name="get_location">Get location</string>	
+	<string name="msg_error_no_connection">No Internet connection is available</string>
+	<string name="label_name">Name</string>
+	<string name="label_description">Description</string>
+	<string name="label_latitude">Latitude</string>
+	<string name="label_longitude">Longitude</string>
 </resources>

@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/mnu_student_edit" android:title="@string/action_student_edit" android:icon="@drawable/ic_action_edit"></item>
     <item android:id="@+id/mnu_student_delete" android:title="@string/action_student_delete" android:icon="@drawable/ic_action_discard"></item>
-        
+    <item android:id="@+id/mnu_share" android:actionProviderClass="android.widget.ShareActionProvider" android:title="@string/action_share" android:showAsAction="always"></item>
+    
 
 </menu>

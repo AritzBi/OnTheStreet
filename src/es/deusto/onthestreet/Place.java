@@ -13,7 +13,8 @@ public class Place implements Serializable {
 	protected static String PLACE_POSITION="position";
 	private String name;
 	private String description;
-	private String location;
+	private double lat;
+	private double lon;
 	private ArrayList<Contact> relatedContacts;
 	private String uri;
 	
@@ -21,14 +22,16 @@ public class Place implements Serializable {
 		super();
 		this.name = "";
 		this.description = "";
-		this.location = "";
+		this.lat=0;
+		this.lon=0;
 		this.relatedContacts=new ArrayList<Contact>();
 	}
-	public Place(String name, String description, String location,ArrayList<Contact>relatedContacts){
+	public Place(String name, String description, double lat,double lon,ArrayList<Contact>relatedContacts){
 		super();
 		this.name = name;
 		this.description = description;
-		this.location = location;
+		this.lat=lat;
+		this.lon=lon;
 		this.relatedContacts=relatedContacts;
 	}
 	public String getName() {
@@ -42,14 +45,7 @@ public class Place implements Serializable {
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	
+	}	
 	public ArrayList<Contact> getRelatedContacts() {
 		return relatedContacts;
 	}
@@ -84,6 +80,18 @@ public class Place implements Serializable {
 	}
 	public void setUri(String uri) {
 		this.uri = uri;
+	}
+	public double getLat() {
+		return lat;
+	}
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+	public double getLon() {
+		return lon;
+	}
+	public void setLon(double lon) {
+		this.lon = lon;
 	}
 	@Override
 	public String toString(){

@@ -1,12 +1,25 @@
 package es.deusto.onthestreet;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimeZone;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.LocationClient;
+
+
+
 
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ActionMode;
@@ -19,7 +32,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends ListActivity {
@@ -35,7 +50,6 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
         this.createPlaceList();
-        //adpPlaces = new ArrayAdapter<Place>(this, android.R.layout.simple_list_item_1, arrPlaces);
 		adpPlaces = new ArrayAdapter<Place>(this, R.layout.image_list, R.id.place_name,arrPlaces) {
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
@@ -43,12 +57,11 @@ public class MainActivity extends ListActivity {
 				TextView text1 = (TextView) view.findViewById(R.id.place_name);
 				TextView text2 = (TextView) view.findViewById(R.id.place_location);
 				text1.setText(arrPlaces.get(position).getName());
-				text2.setText(arrPlaces.get(position).getLocation());
+				String location=arrPlaces.get(position).getLat()+","+arrPlaces.get(position).getLon();
+				text2.setText(location);
 				File imgFile=new File(arrPlaces.get(position).getUri());
 				if(imgFile.exists()){
-					//Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 					ImageView myImage = (ImageView) view.findViewById(R.id.icon_image);
-					//myImage.setImageBitmap(myBitmap);
 					myImage.setImageURI(Uri.fromFile(imgFile));
 				}
 				return view;
@@ -83,6 +96,16 @@ public class MainActivity extends ListActivity {
 	        // Inflate a menu resource providing context menu items
 	        MenuInflater inflater = mode.getMenuInflater();
 	        inflater.inflate(R.menu.place_action, menu);
+	        MenuItem mnuShare = menu.findItem(R.id.mnu_share); 
+	    	ShareActionProvider shareProv = (ShareActionProvider) 
+	    	mnuShare.getActionProvider(); 
+	    	shareProv.setShareHistoryFileName(ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME); 
+	    	Intent intent = new Intent(Intent.ACTION_SEND); 
+	    	intent.setType("text/plain"); 
+	    	int position=MainActivity.this.getListView().getCheckedItemPosition();
+	    	Place tmpPlace=arrPlaces.get(position);
+	    	intent.putExtra(Intent.EXTRA_TEXT, tmpPlace.getName() + " " + tmpPlace.getDescription()); 
+	    	shareProv.setShareIntent(intent); 
 	        return true;
 	    }
 
@@ -187,4 +210,5 @@ public class MainActivity extends ListActivity {
 			 createPlaceList();
 		}
 	}
+
 }
