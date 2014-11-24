@@ -1,14 +1,15 @@
 package es.deusto.onthestreet;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
+import java.io.IOException;
 import java.util.Date;
-import java.util.TimeZone;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -22,7 +23,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,9 +35,9 @@ public class PlaceCreateActivity extends Activity {
 	private File file;
 	private Place place;
 	private Integer editPosition;
-	private ProgressBar barConnectivity;
 	private EditText txtLat;
 	private EditText txtLon;
+	private TextView txtAddress;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +45,7 @@ public class PlaceCreateActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		txtLat=(EditText) findViewById(R.id.txtLat);
 		txtLon=(EditText) findViewById(R.id.txtLon);
-		//barConnectivity = (ProgressBar) findViewById(R.id.barConnection);
-		//barConnectivity.setMax(100);
-		//barConnectivity.setVisibility(View.GONE);
-		// If item description provided, fill the EditText widget
+		txtAddress=(TextView)findViewById(R.id.txtAddress);
 
 		place= (Place) getIntent().getSerializableExtra(Place.PLACE);
 		if(place!=null){
@@ -68,7 +65,7 @@ public class PlaceCreateActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.item_detail, menu);
+		getMenuInflater().inflate(R.menu.item_create, menu);
 		return true;
 	}
 
@@ -86,9 +83,12 @@ public class PlaceCreateActivity extends Activity {
 			place.setDescription(description);
 			place.setLat(Double.parseDouble(txtLat.getText().toString()));
 			place.setLon(Double.parseDouble(txtLon.getText().toString()));
+			place.setAddress(txtAddress.getText().toString());
 			place.setName(name);
 			if(file !=null){
 				place.setUri(getRealPathFromURI(Uri.fromFile(file)));;
+			}else{
+				place.setUri("unknown.jpg");
 			}
 			Intent intentResult = new Intent();
 			intentResult.putExtra(Place.PLACE, place);
@@ -156,8 +156,6 @@ public class PlaceCreateActivity extends Activity {
 			// OK -> Access the Internet
 	    	txtLat.setVisibility(View.GONE);
 	    	txtLon.setVisibility(View.GONE);
-	    	//barConnectivity.setProgress(30);
-	    	//barConnectivity.setVisibility(View.VISIBLE);
 	    	new GetLocation().execute();
 	    } else {
 			// No -> Display error message
@@ -165,14 +163,14 @@ public class PlaceCreateActivity extends Activity {
 	    }		
 	}
 	// Convenience class to access the Internet and update UI elements
-	private class GetLocation extends AsyncTask<String, Void, double[]> implements
+	private class GetLocation extends AsyncTask<String, Void, String[]> implements
 	GooglePlayServicesClient.ConnectionCallbacks,
 	GooglePlayServicesClient.OnConnectionFailedListener{
 	
 		private LocationClient mLocationClient;
 		
 		@Override
-		protected double[] doInBackground(String... params) {
+		protected String[] doInBackground(String... params) {
 			if(GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext()) != ConnectionResult.SUCCESS){
 				return null;
 			}
@@ -186,18 +184,34 @@ public class PlaceCreateActivity extends Activity {
 			Location loc = mLocationClient.getLastLocation();
 			
 			double [] coordinates={loc.getLatitude(),loc.getLongitude()};
-	        return coordinates;
+			String address=this.getLocationAddress(coordinates);
+			String []data={coordinates[0]+"",coordinates[1]+"",address};
+			
+	        return data;
 		}
+		private String getLocationAddress(double[] coords){ 
+			 String result = ""; 
+			 try { 
+			 Geocoder geo = new Geocoder(getApplicationContext()); 
+			 Address address = geo.getFromLocation(coords[0], coords[1], 1).get(0); 
+			 for(int i=0;i<address.getMaxAddressLineIndex();i++) 
+			 result += address.getAddressLine(i) + " "; 
+			 } catch (IOException e) { 
+			 e.printStackTrace(); 
+			 } 
+			 return result; 
+			} 
 	
 		@Override
-		protected void onPostExecute(double [] coordinates) {
+		protected void onPostExecute(String [] data) {
 			txtLat.setVisibility(View.VISIBLE);
 			txtLon.setVisibility(View.VISIBLE);
-			if(coordinates == null)
+			if(data == null)
 				Toast.makeText(getApplicationContext(), R.string.msg_error_server, Toast.LENGTH_SHORT).show();
 			else{
-				txtLat.setText(coordinates[0]+"");
-				txtLon.setText(coordinates[1]+"");
+				txtLat.setText(data[0]);
+				txtLon.setText(data[1]);
+				txtAddress.setText(data[2]);
 			}
 		}
 	

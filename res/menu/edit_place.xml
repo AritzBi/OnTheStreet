@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_new_picture"
+        android:icon="@drawable/ic_action_new_picture"
+        android:orderInCategory="1"
+        android:showAsAction="always"
+        android:title="@string/action_new_picture">
+    </item>
+    <item
+        android:id="@+id/action_get_location"
+        android:icon="@drawable/ic_action_place"
+        android:orderInCategory="2"
+        android:showAsAction="always"
+        android:title="@string/get_location">
+    </item>
+    <item
+        android:id="@+id/action_item_save"
+        android:icon="@drawable/ic_action_save"
+        android:orderInCategory="3"
+        android:showAsAction="always"
+        android:title="@string/action_item_save">
+    </item>
+
+</menu>

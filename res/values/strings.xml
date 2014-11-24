@@ -12,7 +12,7 @@
     <string name="title_activity_place_detail">Place details</string>
     <string name="action_item_accept">Accept</string>
     <string name="action_item_cancel">Cancel</string>
-    <string name="add_student">Add student</string>
+    <string name="add_contact">Add contact</string>
     <string name="action_new_picture">New picture</string>
     <string name="action_student_edit">Edit place</string>
     <string name="action_student_delete">Delete place</string>
@@ -29,4 +29,6 @@
 	<string name="label_accurate_location">Activate accurate location</string>
 	<string name="pref_description_place_limit">50 places per app</string>
 	<string name="pref_title_place_limit">Saved place\'s limit</string>
+	<string name="action_item_save">Save</string>
+	<string name="save_changes">Save changes</string>
 </resources>

@@ -15,6 +15,7 @@ public class Place implements Serializable {
 	private String description;
 	private double lat;
 	private double lon;
+	private String address;
 	private ArrayList<Contact> relatedContacts;
 	private String uri;
 	
@@ -25,14 +26,16 @@ public class Place implements Serializable {
 		this.lat=0;
 		this.lon=0;
 		this.relatedContacts=new ArrayList<Contact>();
+		this.address="";
 	}
-	public Place(String name, String description, double lat,double lon,ArrayList<Contact>relatedContacts){
+	public Place(String name, String description, double lat,double lon,ArrayList<Contact>relatedContacts, String address){
 		super();
 		this.name = name;
 		this.description = description;
 		this.lat=lat;
 		this.lon=lon;
 		this.relatedContacts=relatedContacts;
+		this.address=address;
 	}
 	public String getName() {
 		return name;
@@ -92,6 +95,12 @@ public class Place implements Serializable {
 	}
 	public void setLon(double lon) {
 		this.lon = lon;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	@Override
 	public String toString(){

@@ -85,4 +85,13 @@
         android:layout_marginRight="16dp"
         android:text="@string/label_longitude" />
 
+    <TextView
+        android:id="@+id/txtAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/lblLatitude"
+        android:layout_below="@+id/txtLat"
+        android:layout_marginTop="30dp"
+	 />
+
 </RelativeLayout>

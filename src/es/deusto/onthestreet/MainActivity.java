@@ -35,7 +35,6 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
         this.createPlaceList();
 		adpPlaces = new ArrayAdapter<Place>(this, R.layout.image_list, R.id.place_name,arrPlaces) {
 			@Override
@@ -44,8 +43,8 @@ public class MainActivity extends ListActivity {
 				TextView text1 = (TextView) view.findViewById(R.id.place_name);
 				TextView text2 = (TextView) view.findViewById(R.id.place_location);
 				text1.setText(arrPlaces.get(position).getName());
-				String location=arrPlaces.get(position).getLat()+","+arrPlaces.get(position).getLon();
-				text2.setText(location);
+				//String location=arrPlaces.get(position).getLat()+","+arrPlaces.get(position).getLon();
+				text2.setText(arrPlaces.get(position).getAddress());
 				File imgFile=new File(arrPlaces.get(position).getUri());
 				if(imgFile.exists()){
 					ImageView myImage = (ImageView) view.findViewById(R.id.icon_image);
@@ -140,7 +139,12 @@ public class MainActivity extends ListActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
+    private void createPlaceList(){
+    	arrPlaces=(new PlaceManager(getApplicationContext())).loadPLaces();
+    	if(arrPlaces == null){
+    		arrPlaces=new ArrayList<Place>();
+    	}
+    }
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -157,18 +161,13 @@ public class MainActivity extends ListActivity {
 
 		return super.onOptionsItemSelected(item);
 	}
-    private void createPlaceList(){
-    	arrPlaces=(new PlaceManager(getApplicationContext())).loadPLaces();
-    	if(arrPlaces == null){
-    		arrPlaces=new ArrayList<Place>();
-    	}
-    }
+
     @Override 
     protected void onListItemClick(ListView l, View v, int position, long id) { 
     	super.onListItemClick(l, v, position, id); 
 		Intent itemDetailIntent = new Intent(this, PlaceDetailActivity.class);
 		itemDetailIntent.putExtra(Place.PLACE_POSITION, position);
-		itemDetailIntent.putExtra(Place.ARRAY, arrPlaces);
+		itemDetailIntent.putExtra(Place.PLACE, arrPlaces.get(position));
 		startActivityForResult(itemDetailIntent, VIEW_ITEM);
   
     } 
@@ -189,15 +188,14 @@ public class MainActivity extends ListActivity {
 				arrPlaces.add(place);
 				adpPlaces.notifyDataSetChanged();
 			}		
-		}else if(requestCode == EDIT_ITEM){ // If it was an EDIT_ITEM, replace the selected item and update the list
-			if(resultCode == Activity.RESULT_OK){
+		}else if(requestCode == EDIT_ITEM || requestCode == VIEW_ITEM){ // If it was an EDIT_ITEM, replace the selected item and update the list
+			if(resultCode == Activity.RESULT_OK ){
+				System.out.println("PASO POR AQUI");
 				Place place=(Place)data.getExtras().getSerializable(Place.PLACE);
 				int position=(Integer)data.getExtras().getSerializable(Place.PLACE_POSITION);
 				arrPlaces.set(position, place);
 				adpPlaces.notifyDataSetChanged();
 			}		
-		}else if(requestCode == VIEW_ITEM){
-			 createPlaceList();
 		}
 	}
 	 public void showSettings(MenuItem item){
