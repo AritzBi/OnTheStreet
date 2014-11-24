@@ -38,6 +38,10 @@
             android:name=".PlaceDetailActivity"
             android:label="@string/title_activity_place_detail" >
         </activity>
+        <activity
+            android:name=".MySettingsActivity"
+            android:label="@string/title_activity_my_settings" >
+        </activity>
     </application>
 
 </manifest>

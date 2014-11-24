@@ -24,4 +24,9 @@
 	<string name="label_description">Description</string>
 	<string name="label_latitude">Latitude</string>
 	<string name="label_longitude">Longitude</string>
+	<string name="title_activity_my_settings">Settings</string>
+	<string name="label_notifications">Activate notifications</string>
+	<string name="label_accurate_location">Activate accurate location</string>
+	<string name="pref_description_place_limit">50 places per app</string>
+	<string name="pref_title_place_limit">Saved place\'s limit</string>
 </resources>

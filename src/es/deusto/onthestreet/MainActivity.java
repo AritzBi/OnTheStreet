@@ -1,26 +1,14 @@
 package es.deusto.onthestreet;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.TimeZone;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
-
-
-
 
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
-import android.location.Location;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -34,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class MainActivity extends ListActivity {
@@ -85,7 +72,7 @@ public class MainActivity extends ListActivity {
 		        return true;
 		    }
 		});
-        
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false); 
     }
 
 	private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
@@ -163,6 +150,9 @@ public class MainActivity extends ListActivity {
 			Intent itemCreateIntent = new Intent(this, PlaceCreateActivity.class);
 			startActivityForResult(itemCreateIntent, ADD_ITEM);
 			break;
+		case R.id.action_settings:
+			this.showSettings(item);
+			break;
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -210,5 +200,9 @@ public class MainActivity extends ListActivity {
 			 createPlaceList();
 		}
 	}
+	 public void showSettings(MenuItem item){
+		 Intent intent = new Intent(this, MySettingsActivity.class);
+		 startActivity(intent);
+		 } 
 
 }
