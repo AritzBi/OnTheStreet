@@ -31,4 +31,6 @@
 	<string name="pref_title_place_limit">Saved place\'s limit</string>
 	<string name="action_item_save">Save</string>
 	<string name="save_changes">Save changes</string>
+	<string name="search_title">Search place</string>
+	<string name="search_hint">Enter the place\'s name</string>
 </resources>

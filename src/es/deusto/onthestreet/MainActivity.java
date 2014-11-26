@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,9 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
@@ -29,21 +32,22 @@ public class MainActivity extends ListActivity {
 	public static final int ADD_ITEM = 0;
 	public static final int EDIT_ITEM = 1;
 	public static final int VIEW_ITEM = 2;
+	public static final int GEO_FILTER = 0;
+	public static final int SEARCH_FILTER=1;
 	private ArrayList<Place>arrPlaces;
-	private ArrayAdapter<Place> adpPlaces;
+	private MyCustomAdapter adpPlaces;
 	private ActionMode mActionMode=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.createPlaceList();
-		adpPlaces = new ArrayAdapter<Place>(this, R.layout.image_list, R.id.place_name,arrPlaces) {
+		adpPlaces = new MyCustomAdapter(this, R.layout.image_list, R.id.place_name,arrPlaces) {
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				View view = super.getView(position, convertView, parent);
 				TextView text1 = (TextView) view.findViewById(R.id.place_name);
 				TextView text2 = (TextView) view.findViewById(R.id.place_location);
 				text1.setText(arrPlaces.get(position).getName());
-				//String location=arrPlaces.get(position).getLat()+","+arrPlaces.get(position).getLon();
 				text2.setText(arrPlaces.get(position).getAddress());
 				File imgFile=new File(arrPlaces.get(position).getUri());
 				if(imgFile.exists()){
@@ -137,6 +141,29 @@ public class MainActivity extends ListActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+         SearchView searchView =
+                 (SearchView) menu.findItem(R.id.search).getActionView();
+         searchView.setSearchableInfo(
+                 searchManager.getSearchableInfo(getComponentName()));
+         searchView.setOnQueryTextListener(new OnQueryTextListener() { 
+
+             @Override 
+             public boolean onQueryTextChange(String query) {
+            	 System.out.println("Paso por aquiele");
+            	 System.out.println(query+"hola");
+            	 adpPlaces.getFilter(SEARCH_FILTER).filter(query);
+                 return true; 
+
+             }
+
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				return false;
+			} 
+
+         });
         return true;
     }
     private void createPlaceList(){
@@ -157,6 +184,8 @@ public class MainActivity extends ListActivity {
 		case R.id.action_settings:
 			this.showSettings(item);
 			break;
+		case R.id.action_get_location:
+			adpPlaces.getFilter(GEO_FILTER).filter("");
 		}
 
 		return super.onOptionsItemSelected(item);

@@ -1466,15 +1466,16 @@ containing a value of this type.
         public static final int ic_action_new_picture=0x7f020077;
         public static final int ic_action_place=0x7f020078;
         public static final int ic_action_save=0x7f020079;
-        public static final int ic_action_settings=0x7f02007a;
-        public static final int ic_action_share=0x7f02007b;
-        public static final int ic_launcher=0x7f02007c;
-        public static final int ic_plusone_medium_off_client=0x7f02007d;
-        public static final int ic_plusone_small_off_client=0x7f02007e;
-        public static final int ic_plusone_standard_off_client=0x7f02007f;
-        public static final int ic_plusone_tall_off_client=0x7f020080;
-        public static final int powered_by_google_dark=0x7f020081;
-        public static final int powered_by_google_light=0x7f020082;
+        public static final int ic_action_search=0x7f02007a;
+        public static final int ic_action_settings=0x7f02007b;
+        public static final int ic_action_share=0x7f02007c;
+        public static final int ic_launcher=0x7f02007d;
+        public static final int ic_plusone_medium_off_client=0x7f02007e;
+        public static final int ic_plusone_small_off_client=0x7f02007f;
+        public static final int ic_plusone_standard_off_client=0x7f020080;
+        public static final int ic_plusone_tall_off_client=0x7f020081;
+        public static final int powered_by_google_dark=0x7f020082;
+        public static final int powered_by_google_light=0x7f020083;
     }
     public static final class id {
         public static final int action_bar=0x7f09002e;
@@ -1531,12 +1532,12 @@ containing a value of this type.
         public static final int list_item=0x7f09003b;
         public static final int match_parent=0x7f09000c;
         public static final int middle=0x7f090024;
-        public static final int mnu_add_contact=0x7f090066;
+        public static final int mnu_add_contact=0x7f090067;
         public static final int mnu_add_place=0x7f090062;
-        public static final int mnu_save_changes=0x7f090067;
-        public static final int mnu_share=0x7f090065;
-        public static final int mnu_student_delete=0x7f090064;
-        public static final int mnu_student_edit=0x7f090063;
+        public static final int mnu_save_changes=0x7f090068;
+        public static final int mnu_share=0x7f090066;
+        public static final int mnu_student_delete=0x7f090065;
+        public static final int mnu_student_edit=0x7f090064;
         public static final int monochrome=0x7f090013;
         public static final int never=0x7f09001c;
         public static final int none=0x7f090000;
@@ -1549,6 +1550,7 @@ containing a value of this type.
         public static final int radio=0x7f090041;
         public static final int sandbox=0x7f090008;
         public static final int satellite=0x7f090002;
+        public static final int search=0x7f090063;
         public static final int search_badge=0x7f090044;
         public static final int search_bar=0x7f090043;
         public static final int search_button=0x7f090045;
@@ -1817,6 +1819,8 @@ containing a value of this type.
         public static final int pref_description_place_limit=0x7f07004a;
         public static final int pref_title_place_limit=0x7f07004b;
         public static final int save_changes=0x7f07004d;
+        public static final int search_hint=0x7f07004f;
+        public static final int search_title=0x7f07004e;
         public static final int store_picture_message=0x7f070001;
         public static final int store_picture_title=0x7f070000;
         public static final int title_activity_my_settings=0x7f070047;
@@ -2069,6 +2073,7 @@ containing a value of this type.
     }
     public static final class xml {
         public static final int preferences=0x7f050000;
+        public static final int searchable=0x7f050001;
     }
     public static final class styleable {
         /**  ============================================ 

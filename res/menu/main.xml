@@ -15,5 +15,16 @@
         android:showAsAction="ifRoom|withText"
         android:title="@string/add_place">
     </item>
-
+    <item
+        android:id="@+id/action_get_location"
+        android:icon="@drawable/ic_action_place"
+        android:orderInCategory="2"
+        android:showAsAction="always"
+        android:title="@string/get_location">
+    </item>
+        <item android:id="@+id/search"
+          android:title="@string/search_title"
+          android:icon="@drawable/ic_action_search"
+          android:showAsAction="collapseActionView|ifRoom"
+          android:actionViewClass="android.widget.SearchView" />
 </menu>

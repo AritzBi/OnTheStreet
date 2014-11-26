@@ -24,6 +24,8 @@ public class MySettingsFragment extends PreferenceFragment implements OnSharedPr
 		// In the case of change in pref_username, replace the default summary with the new value
 		if(key.equals("pref_username"))
 				this.findPreference(key).setSummary(sharedPreferences.getString(key, ""));
+		else if(key.equals("pref_key_place_limit"))
+			this.findPreference(key).setSummary(sharedPreferences.getString(key, ""));
 		
 	}	
 	
