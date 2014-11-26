@@ -3,7 +3,9 @@ package es.deusto.onthestreet;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
+import android.preference.PreferenceManager;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 
@@ -72,12 +74,14 @@ public class MyCustomAdapter extends ArrayAdapter implements LocationCallback{
 
 	@Override
 	public void getCurrentLocation(Location location) {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+		String mynumberPref = sharedPref.getString("pref_key_place_limit", ""); 
 		arrPlaces.clear();
 		for(Place p: allPlaces){		
 			Location l=new Location("");
 			l.setLatitude(p.getLat());
 			l.setLongitude(p.getLon());
-			if(location.distanceTo(l)<=1000){
+			if(location.distanceTo(l)<=Integer.parseInt(mynumberPref)){
 				arrPlaces.add(p);
 			}
 		}
