@@ -6,9 +6,9 @@
     
    <ImageView
         android:id="@+id/icon_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
- android:padding="5dp" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+ 		android:padding="5dp" />
 
     <TextView
         android:id="@+id/place_name"
@@ -17,7 +17,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:padding="2dp"
-        android:textColor="#33CC33" />
+	 />
 
     <TextView
         android:id="@+id/place_location"

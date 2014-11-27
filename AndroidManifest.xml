@@ -43,6 +43,7 @@
             android:name=".MySettingsActivity"
             android:label="@string/title_activity_my_settings" >
         </activity>
+         <service android:name="NearPlaceService"></service>
     </application>
 
 </manifest>

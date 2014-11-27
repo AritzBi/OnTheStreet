@@ -2,9 +2,12 @@ package es.deusto.onthestreet;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.ListActivity;
+import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -41,22 +44,7 @@ public class MainActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.createPlaceList();
-		adpPlaces = new MyCustomAdapter(this, R.layout.image_list, R.id.place_name,arrPlaces) {
-			@Override
-			public View getView(int position, View convertView, ViewGroup parent) {
-				View view = super.getView(position, convertView, parent);
-				TextView text1 = (TextView) view.findViewById(R.id.place_name);
-				TextView text2 = (TextView) view.findViewById(R.id.place_location);
-				text1.setText(arrPlaces.get(position).getName());
-				text2.setText(arrPlaces.get(position).getAddress());
-				File imgFile=new File(arrPlaces.get(position).getUri());
-				if(imgFile.exists()){
-					ImageView myImage = (ImageView) view.findViewById(R.id.icon_image);
-					myImage.setImageURI(Uri.fromFile(imgFile));
-				}
-				return view;
-			}
-		};
+		adpPlaces = new MyCustomAdapter(this, R.layout.image_list, R.id.place_name,arrPlaces) ;
         setListAdapter(adpPlaces);
         getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -76,6 +64,15 @@ public class MainActivity extends ListActivity {
 		    }
 		});
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false); 
+        Intent myIntent = new Intent(getApplicationContext(), NearPlaceService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(),  0, myIntent, 0);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.SECOND, 10); // first time
+        long frequency= 10 * 1000; // in ms 
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frequency, pendingIntent);        
+        
     }
 
 	private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
@@ -153,7 +150,7 @@ public class MainActivity extends ListActivity {
              public boolean onQueryTextChange(String query) {
             	 System.out.println("Paso por aquiele");
             	 System.out.println(query+"hola");
-            	 adpPlaces.getFilter(SEARCH_FILTER).filter(query);
+            	 adpPlaces.getFilter().filter(query);
                  return true; 
 
              }
@@ -185,7 +182,7 @@ public class MainActivity extends ListActivity {
 			this.showSettings(item);
 			break;
 		case R.id.action_get_location:
-			adpPlaces.getFilter(GEO_FILTER).filter("");
+			adpPlaces.getFilter().filter("");
 		}
 
 		return super.onOptionsItemSelected(item);
