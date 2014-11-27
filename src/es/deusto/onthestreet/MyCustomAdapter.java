@@ -17,21 +17,15 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-@SuppressWarnings({ "rawtypes" })
 public class MyCustomAdapter extends BaseAdapter implements Filterable,LocationCallback{
 	private ArrayList<Place>arrPlaces;
 	private ArrayList<Place>allPlaces;
 	private Context context;
 	private int resource;
-	@SuppressWarnings("unchecked")
+	private int filterMode=0;
 	public MyCustomAdapter(Context context, int resource,
 			int textViewResourceId, ArrayList<Place> places) {
 		super();
-		/*allPlaces=places;
-		arrPlaces=cloneList(allPlaces);
-		arrPlaces.clear();
-		System.out.println(allPlaces);
-		System.out.println(arrPlaces);*/
 		allPlaces=cloneList(places);
 		arrPlaces=places;
 		this.context=context;
@@ -63,8 +57,6 @@ public class MyCustomAdapter extends BaseAdapter implements Filterable,LocationC
 	            @SuppressWarnings("unchecked")
 	            @Override
 	            protected void publishResults(CharSequence constraint, FilterResults results) {
-	            	System.out.println("Arriba values");
-	            	System.out.println(results.values);
 	            	arrPlaces = (ArrayList<Place>) results.values;
 	                MyCustomAdapter.this.notifyDataSetChanged();
 	            }
@@ -73,44 +65,26 @@ public class MyCustomAdapter extends BaseAdapter implements Filterable,LocationC
 	            protected FilterResults performFiltering(CharSequence constraint) {
 	            	
 	                FilterResults results = new FilterResults();
-	                /*if(mode == MainActivity.GEO_FILTER){
+	                if(filterMode == MainActivity.GEO_FILTER){
 	                    results.values = cloneList(allPlaces);
-	                    GeoLocation geo=new GeoLocation(MyCustomAdapter.this,context);
-	                    geo.execute();
-	                }else{*/
+	                    if(constraint.equals("1")){
+		                    GeoLocation geo=new GeoLocation(MyCustomAdapter.this,context);
+		                    geo.execute();
+	                    }
+	                }else{
 	                	if(constraint.length()==0){
-	                		System.out.println("vacio");
-	                		//results.values=cloneList(allPlaces);
 	                		results.values=allPlaces;
-	                		System.out.println(allPlaces);
 	                	}else{
-	                		/*System.out.println("Llamo al segundo");
-	                		System.out.println(allPlaces);
-	                    	System.out.println(constraint);
-	                		arrPlaces.clear();
-	                		System.out.println(allPlaces);
-	                    	ArrayList<Place>filteredPlaces=new ArrayList<Place>();
-	                		for(Place p: allPlaces){		
-	                			if(p.getName().contains(constraint)){
-	                				System.out.println("true");
-	                				filteredPlaces.add(new Place(p));
-	                			}
-	                				
-	                		}
-	                		results.values = filteredPlaces;
-	                		System.out.println("Values");
-	                		System.out.println(results.values);*/
 	                		ArrayList<Place>filteredPlaces=new ArrayList<Place>();
 	                		for(Place p: allPlaces){		
 	                			if(p.getName().contains(constraint)){
-	                				System.out.println("true");
 	                				filteredPlaces.add(p);
 	                			}
 	                				
 	                		}
 	                		results.values = filteredPlaces;
 	                	}
-	                //}
+	                }
 
 	                return results;
 	            }
@@ -118,17 +92,14 @@ public class MyCustomAdapter extends BaseAdapter implements Filterable,LocationC
 	}
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return arrPlaces.size();
 	}
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
 		return arrPlaces.get(position);
 	}
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
 		return position;
 	}
 	@Override
@@ -150,5 +121,35 @@ public class MyCustomAdapter extends BaseAdapter implements Filterable,LocationC
 		}
 		return view;
 	}
-
+	public ArrayList<Place> getArrPlaces() {
+		return arrPlaces;
+	}
+	public void setArrPlaces(ArrayList<Place> arrPlaces) {
+		this.arrPlaces = arrPlaces;
+	}
+	public ArrayList<Place> getAllPlaces() {
+		return allPlaces;
+	}
+	public void setAllPlaces(ArrayList<Place> allPlaces) {
+		this.allPlaces = allPlaces;
+	}
+	public Context getContext() {
+		return context;
+	}
+	public void setContext(Context context) {
+		this.context = context;
+	}
+	public int getResource() {
+		return resource;
+	}
+	public void setResource(int resource) {
+		this.resource = resource;
+	}
+	public int getFilterMode() {
+		return filterMode;
+	}
+	public void setFilterMode(int filterMode) {
+		this.filterMode = filterMode;
+	}
+	
 }

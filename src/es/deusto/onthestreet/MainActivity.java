@@ -1,6 +1,5 @@
 package es.deusto.onthestreet;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -11,7 +10,6 @@ import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -20,14 +18,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.ShareActionProvider;
-import android.widget.TextView;
 
 
 public class MainActivity extends ListActivity {
@@ -37,6 +32,7 @@ public class MainActivity extends ListActivity {
 	public static final int VIEW_ITEM = 2;
 	public static final int GEO_FILTER = 0;
 	public static final int SEARCH_FILTER=1;
+	public boolean toggleMode;
 	private ArrayList<Place>arrPlaces;
 	private MyCustomAdapter adpPlaces;
 	private ActionMode mActionMode=null;
@@ -72,7 +68,7 @@ public class MainActivity extends ListActivity {
         calendar.add(Calendar.SECOND, 10); // first time
         long frequency= 10 * 1000; // in ms 
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frequency, pendingIntent);        
-        
+        toggleMode=false;
     }
 
 	private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
@@ -148,8 +144,7 @@ public class MainActivity extends ListActivity {
 
              @Override 
              public boolean onQueryTextChange(String query) {
-            	 System.out.println("Paso por aquiele");
-            	 System.out.println(query+"hola");
+            	 adpPlaces.setFilterMode(SEARCH_FILTER);
             	 adpPlaces.getFilter().filter(query);
                  return true; 
 
@@ -182,10 +177,23 @@ public class MainActivity extends ListActivity {
 			this.showSettings(item);
 			break;
 		case R.id.action_get_location:
-			adpPlaces.getFilter().filter("");
+			this.toggleFilter(item);
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void toggleFilter(MenuItem item){
+		adpPlaces.setFilterMode(GEO_FILTER);
+		if(toggleMode){
+			toggleMode=!toggleMode;
+			item.setIcon(getResources().getDrawable(R.drawable.ic_action_place));
+			adpPlaces.getFilter().filter("0");
+		}else{
+			toggleMode=!toggleMode;
+			item.setIcon(getResources().getDrawable(R.drawable.ic_action_location_off));
+			adpPlaces.getFilter().filter("1");
+		}
 	}
 
     @Override 
