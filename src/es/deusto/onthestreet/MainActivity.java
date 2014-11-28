@@ -59,15 +59,7 @@ public class MainActivity extends ListActivity {
 		        return true;
 		    }
 		});
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false); 
-        Intent myIntent = new Intent(getApplicationContext(), NearPlaceService.class);
-        PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(),  0, myIntent, 0);
-        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.SECOND, 10); // first time
-        long frequency= 10 * 1000; // in ms 
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frequency, pendingIntent);        
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);   
         toggleMode=false;
     }
 

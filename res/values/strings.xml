@@ -33,4 +33,5 @@
 	<string name="save_changes">Save changes</string>
 	<string name="search_title">Search place</string>
 	<string name="search_hint">Enter the place\'s name</string>
+	<string name="action_contact_delete">Delete contact</string>
 </resources>

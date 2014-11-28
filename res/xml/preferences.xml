@@ -11,7 +11,7 @@
             android:entries="@array/stringArray"
             android:entryValues="@array/integerArray" 
             android:defaultValue="100"/>
-        <SwitchPreference android:title="@string/label_notifications" android:key="pref_fulltime" android:switchTextOn="Yes" android:switchTextOff="No"/>
+        <SwitchPreference android:title="@string/label_notifications" android:key="pref_notifacation" android:switchTextOn="Yes" android:switchTextOff="No"/>
         <SwitchPreference android:title="@string/label_accurate_location" android:key="pref_fulltime" android:switchTextOn="Yes" android:switchTextOff="No"/>
     </PreferenceCategory>
     

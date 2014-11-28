@@ -16,7 +16,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 public class NearPlaceService extends Service implements LocationCallback{
-
+	private Place lastPlace;
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -45,13 +45,13 @@ public class NearPlaceService extends Service implements LocationCallback{
 	 * @param context the current context
 	 * @param message the small text to display
 	 */
-	private void showNotification(Context context, String message){
+	private void showNotification(Context context, String message, double minDinstace){
 		// First, create the notification
 		NotificationCompat.Builder nBuilder =
 				new NotificationCompat.Builder(context)
-				.setContentTitle("OnTheStreet")
+				.setContentTitle(message)
 				.setSmallIcon(R.drawable.ic_action_place)
-				.setContentText(message);
+				.setContentText("Distance: "+minDinstace);
 		Notification noti = nBuilder.build();
 
 		// Second, display the notification
@@ -75,17 +75,29 @@ public class NearPlaceService extends Service implements LocationCallback{
 		String mynumberPref = sharedPref.getString("pref_key_place_limit", ""); 
 		ArrayList<Place>allPlaces=(new PlaceManager(getApplicationContext())).loadPLaces();
 		Place selected=null;
+		double distance=0;
+		double minDistance=Integer.MAX_VALUE;
 		for(Place p: allPlaces){		
 			Location l=new Location("");
 			l.setLatitude(p.getLat());
 			l.setLongitude(p.getLon());
-			if(location.distanceTo(l)<=Integer.parseInt(mynumberPref)){
+			distance=location.distanceTo(l);
+			if((distance<=Integer.parseInt(mynumberPref)&& distance<minDistance)){
 				selected=p;
-				break;
+				minDistance=distance;
 			}
 		}
 		if(selected !=null){
-			this.showNotification(getApplicationContext(), selected.getName());
+			if(lastPlace == null){
+				lastPlace=selected;
+				this.showNotification(getApplicationContext(), selected.getName(),minDistance);
+			}else{
+				System.out.println("Paso por el segundo");
+				if(!(lastPlace.equals(selected))){
+					lastPlace=selected;
+					this.showNotification(getApplicationContext(), selected.getName(),minDistance);
+				}
+			}
 		}
 	}
 

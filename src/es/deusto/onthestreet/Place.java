@@ -116,4 +116,12 @@ public class Place implements Serializable {
 		return this.getName()+" "+getDescription();
 	}
 	
+	public boolean  equals(Object p){
+		Place place=(Place)p;
+		if(this.getName().equals(place.getName())&& this.getAddress().equals(place.getAddress())&&this.getDescription().equals(place.getDescription()))
+			return true;
+		else
+			return false;
+	}
+	
 }
