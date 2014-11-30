@@ -88,7 +88,6 @@ public class NearPlaceService extends Service implements LocationCallback{
 				lastPlace=selected;
 				this.showNotification(getApplicationContext(), selected.getName(),minDistance);
 			}else{
-				System.out.println("Paso por el segundo");
 				if(!(lastPlace.equals(selected))){
 					lastPlace=selected;
 					this.showNotification(getApplicationContext(), selected.getName(),minDistance);

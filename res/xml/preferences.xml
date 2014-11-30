@@ -3,9 +3,9 @@
 
     <PreferenceCategory android:title="User data" >
         <EditTextPreference
-            android:key="pref_useremail"
-            android:summary="Enter your email"
-            android:title="Email" />
+            android:key="pref_username"
+            android:summary="Enter your username"
+            android:title="Username" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/title_activity_my_settings" >
         <ListPreference

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -27,7 +28,10 @@ public class MySettingsFragment extends PreferenceFragment implements OnSharedPr
         String meters=PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("pref_key_distance", "");
         editTextPref
                 .setSummary("Number of meters: "+meters);
-        
+        EditTextPreference editTextPrefUser = (EditTextPreference) findPreference("pref_username");
+        String username=PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("pref_username", "");
+        editTextPrefUser
+                .setSummary("Username: "+username);
 		
         
     }

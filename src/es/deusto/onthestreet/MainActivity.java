@@ -74,7 +74,8 @@ public class MainActivity extends ListActivity {
 	    	intent.setType("text/plain"); 
 	    	int position=MainActivity.this.getListView().getCheckedItemPosition();
 	    	Place tmpPlace=arrPlaces.get(position);
-	    	intent.putExtra(Intent.EXTRA_TEXT, tmpPlace.getName() + " " + tmpPlace.getDescription()); 
+	    	String username=PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_username", "");
+	    	intent.putExtra(Intent.EXTRA_TEXT, username+" shares: "+tmpPlace.getName() + " " + tmpPlace.getDescription()); 
 	    	shareProv.setShareIntent(intent); 
 	        return true;
 	    }
@@ -101,12 +102,7 @@ public class MainActivity extends ListActivity {
 	            case R.id.mnu_place_delete:
 	                mode.finish(); // Action picked, so close the CAB and execute action
 	                int position=MainActivity.this.getListView().getCheckedItemPosition();
-	                System.out.println(position);
-	                System.out.println(arrPlaces.size());
-	                System.out.println(adpPlaces.getArrPlaces().size());
 	                arrPlaces.remove(position);
-	                System.out.println(arrPlaces.size());
-	                System.out.println(adpPlaces.getArrPlaces().size());
 	                adpPlaces.notifyDataSetChanged();
 	                return true;
 	            default:

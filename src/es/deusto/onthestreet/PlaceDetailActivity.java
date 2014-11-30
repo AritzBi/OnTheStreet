@@ -101,7 +101,6 @@ public class PlaceDetailActivity extends Activity{
 	                ListView listContact=((ListView)findViewById(R.id.listContacts));
 	                place.getRelatedContacts().remove(listContact.getCheckedItemPosition());
 	                adpContacts.notifyDataSetChanged();
-	                System.out.println(listContact.getCheckedItemPosition());
 	                return true;
 	            default:
 	                return false;

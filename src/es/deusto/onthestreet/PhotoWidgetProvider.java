@@ -103,5 +103,5 @@ public class PhotoWidgetProvider extends AppWidgetProvider implements
 		 photo=Bitmap.createScaledBitmap(photo, w, h, true);
 
 		 return photo;
-		 }
+	 }
 }
