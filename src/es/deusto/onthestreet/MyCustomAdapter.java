@@ -2,6 +2,7 @@ package es.deusto.onthestreet;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -37,9 +38,9 @@ public class MyCustomAdapter extends BaseAdapter implements Filterable,LocationC
 	    return clone;
 	}
 	@Override
-	public void getCurrentLocation(Location location) {
+	public void getCurrentLocation(Location location, String Adress) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-		String mynumberPref = sharedPref.getString("pref_key_place_limit", ""); 
+		String mynumberPref = sharedPref.getString("pref_key_distance", ""); 
 		arrPlaces.clear();
 		for(Place p: allPlaces){		
 			Location l=new Location("");
@@ -57,7 +58,9 @@ public class MyCustomAdapter extends BaseAdapter implements Filterable,LocationC
 	            @SuppressWarnings("unchecked")
 	            @Override
 	            protected void publishResults(CharSequence constraint, FilterResults results) {
-	            	arrPlaces = (ArrayList<Place>) results.values;
+	            	//arrPlaces = (ArrayList<Place>) results.values;
+	            	arrPlaces.clear();
+	            	arrPlaces.addAll((Collection<? extends Place>) results.values);
 	                MyCustomAdapter.this.notifyDataSetChanged();
 	            }
 

@@ -6,7 +6,6 @@ package es.deusto.onthestreet;
 
 
 import java.io.File;
-import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,16 +23,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
 public class PlaceDetailActivity extends Activity{
 	private Place place;
-	private int placePosition;
-	private ArrayList<Place> arrPlaces;
+	private Integer placePosition;
 	private ActionMode mActionMode = null;
 	private ArrayAdapter<Contact> adpContacts;
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,7 +40,8 @@ public class PlaceDetailActivity extends Activity{
 		TextView edtAddress= ((TextView) findViewById(R.id.txtAddress));
 		final ListView listContact=((ListView)findViewById(R.id.listContacts));
 		ImageView image=(ImageView)findViewById(R.id.image_icon);
-		placePosition= (Integer) getIntent().getSerializableExtra(Place.PLACE_POSITION);
+		if(getIntent().hasExtra(Place.PLACE_POSITION))
+			placePosition= (Integer) getIntent().getSerializableExtra(Place.PLACE_POSITION);
 		place=(Place)getIntent().getSerializableExtra(Place.PLACE);
 		if(place != null){
 			edtName.setText(place.getName());
@@ -124,7 +121,8 @@ public class PlaceDetailActivity extends Activity{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.place_show, menu);
+		if (placePosition!=null)
+			getMenuInflater().inflate(R.menu.place_show, menu);
 		return true;
 	}
 	

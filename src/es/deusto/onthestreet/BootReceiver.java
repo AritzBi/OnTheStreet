@@ -15,15 +15,15 @@ public class BootReceiver extends BroadcastReceiver{
     public void onReceive(Context context, Intent intent) {
         Log.i("BootReceiver","intent received");
 
-		boolean notifications=PreferenceManager.getDefaultSharedPreferences(context).getBoolean("pref_notifacation", false);
+		boolean notifications=PreferenceManager.getDefaultSharedPreferences(context).getBoolean("pref_nofitication", false);
 		if(notifications){
 			 Intent myIntent = new Intent(context, NearPlaceService.class);
 		        PendingIntent pendingIntent = PendingIntent.getService(context,  0, myIntent, 0);
 		        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 		        Calendar calendar = Calendar.getInstance();
 		        calendar.setTimeInMillis(System.currentTimeMillis());
-		        calendar.add(Calendar.SECOND, 10); // first time
-		        long frequency= 10 * 1000; // in ms 
+		        calendar.add(Calendar.SECOND, 60); 
+		        long frequency= 60 * 1000; 
 		        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frequency, pendingIntent);      
 		}
     }

@@ -27,9 +27,7 @@ GooglePlayServicesClient.OnConnectionFailedListener{
 		this.context=context;
 		this.cb=cb;
 	}
-	public GeoLocation(Context context) {
-		this.context=context;
-	}
+
 	@Override
 	protected String[] doInBackground(String... params) {
 		if(GooglePlayServicesUtil.isGooglePlayServicesAvailable(context) != ConnectionResult.SUCCESS){
@@ -37,24 +35,13 @@ GooglePlayServicesClient.OnConnectionFailedListener{
 		}
 		
         mLocationClient = new LocationClient(context, this, this);
-        mLocationClient.connect(); // Emulators with no Google Play support will fail at this point
-        System.out.println("1");
-        // Wait until connection
+        mLocationClient.connect(); 
         while(!mLocationClient.isConnected());
-        System.out.println("1.5");
 		Location loc = mLocationClient.getLastLocation();
-		if(cb!=null){
 			double [] coordinates={loc.getLatitude(),loc.getLongitude()};
 			String address=this.getLocationAddress(coordinates);
 			String []data={coordinates[0]+"",coordinates[1]+"",address};
-			System.out.println("2");
 			return data;
-		}else{
-			double [] coordinates={loc.getLatitude(),loc.getLongitude()};
-			String []data={coordinates[0]+"",coordinates[1]+""};
-			System.out.println("2");
-			return data;
-		}
 
 		
         
@@ -83,7 +70,7 @@ GooglePlayServicesClient.OnConnectionFailedListener{
 				Location l=new Location("");
 				l.setLatitude(latitude);
 				l.setLongitude(longitude);
-				cb.getCurrentLocation(l);
+				cb.getCurrentLocation(l,data[2]);
 			}
 		}
 	}
@@ -96,7 +83,6 @@ GooglePlayServicesClient.OnConnectionFailedListener{
 	@Override
 	public void onConnected(Bundle arg0) {
 		Log.i("Location client", "Connected");
-		// Normally, we will perform the actions here, but from this place we cannot access UI elements
 	}
 
 	@Override

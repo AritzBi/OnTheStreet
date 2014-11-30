@@ -1,17 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>  
-<resources>  
-    <string-array name="integerArray">  
-        <item>100</item>  
-        <item>500</item>  
-        <item>1000</item>  
-        <item>5000</item>  
-        <item>60000</item>  
-   </string-array>
-       <string-array name="stringArray">  
-        <item>100</item>  
-        <item>500</item>  
-        <item>1000</item>  
-        <item>5000</item>  
-        <item>60000</item>  
-   </string-array>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="integerArray">
+        <item>100</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>5000</item>
+        <item>60000</item>
+    </string-array>
+    <string-array name="stringArray">
+        <item>100</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>5000</item>
+        <item>60000</item>
+    </string-array>
+
 </resources>

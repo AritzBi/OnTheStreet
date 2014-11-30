@@ -1,37 +1,25 @@
 package es.deusto.onthestreet;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
-
-public class PlaceCreateActivity extends Activity {
+public class PlaceCreateActivity extends Activity implements LocationCallback {
 	private File file;
 	private Place place;
 	private Integer editPosition;
@@ -58,9 +46,14 @@ public class PlaceCreateActivity extends Activity {
 			txtAddress.setText(place.getAddress());
 		}else{
 			place=new Place();
+			SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+			boolean automatic = sharedPref.getBoolean("pref_automatic_location",false); 
+			if(automatic){
+				GeoLocation geo=new GeoLocation(PlaceCreateActivity.this,getApplicationContext());
+				geo.execute();
+			}
 		}
 		editPosition=(Integer) getIntent().getSerializableExtra(Place.PLACE_POSITION);
-
 	}
 
 	@Override
@@ -115,7 +108,8 @@ public class PlaceCreateActivity extends Activity {
 			intentTakePicture();
 			break;
 		case R.id.action_get_location:
-			this.getLocation();
+			GeoLocation geo=new GeoLocation(PlaceCreateActivity.this,getApplicationContext());
+			geo.execute();
 			break;
 		}
 
@@ -124,7 +118,7 @@ public class PlaceCreateActivity extends Activity {
 	private String getRealPathFromURI(Uri contentURI) {
 	    String result;
 	    Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
-	    if (cursor == null) { // Source is Dropbox or other similar local file path
+	    if (cursor == null) {
 	        result = contentURI.getPath();
 	    } else { 
 	        cursor.moveToFirst(); 
@@ -155,90 +149,13 @@ public class PlaceCreateActivity extends Activity {
 			}
 		}
 	}
-	private void getLocation(){
-		// First check if there is connectivity
-		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-	    if (networkInfo != null && networkInfo.isConnected()) {
-			// OK -> Access the Internet
-	    	txtLat.setVisibility(View.GONE);
-	    	txtLon.setVisibility(View.GONE);
-	    	new GetLocation().execute();
-	    } else {
-			// No -> Display error message
-	        Toast.makeText(this, R.string.msg_error_no_connection, Toast.LENGTH_SHORT).show();
-	    }		
-	}
-	// Convenience class to access the Internet and update UI elements
-	private class GetLocation extends AsyncTask<String, Void, String[]> implements
-	GooglePlayServicesClient.ConnectionCallbacks,
-	GooglePlayServicesClient.OnConnectionFailedListener{
-	
-		private LocationClient mLocationClient;
-		
-		@Override
-		protected String[] doInBackground(String... params) {
-			if(GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext()) != ConnectionResult.SUCCESS){
-				return null;
-			}
-			
-	        mLocationClient = new LocationClient(getApplicationContext(), this, this);
-	        mLocationClient.connect(); // Emulators with no Google Play support will fail at this point
-	        
-	        // Wait until connection
-	        while(!mLocationClient.isConnected());
-	        
-			Location loc = mLocationClient.getLastLocation();
-			
-			double [] coordinates={loc.getLatitude(),loc.getLongitude()};
-			String address=this.getLocationAddress(coordinates);
-			String []data={coordinates[0]+"",coordinates[1]+"",address};
-			
-	        return data;
-		}
-		private String getLocationAddress(double[] coords){ 
-			 String result = ""; 
-			 try { 
-			 Geocoder geo = new Geocoder(getApplicationContext()); 
-			 Address address = geo.getFromLocation(coords[0], coords[1], 1).get(0); 
-			 for(int i=0;i<address.getMaxAddressLineIndex();i++) 
-			 result += address.getAddressLine(i) + " "; 
-			 } catch (IOException e) { 
-			 e.printStackTrace(); 
-			 } 
-			 return result; 
-			} 
-	
-		@Override
-		protected void onPostExecute(String [] data) {
-			txtLat.setVisibility(View.VISIBLE);
-			txtLon.setVisibility(View.VISIBLE);
-			if(data == null)
-				Toast.makeText(getApplicationContext(), R.string.msg_error_server, Toast.LENGTH_SHORT).show();
-			else{
-				txtLat.setText(data[0]);
-				txtLon.setText(data[1]);
-				txtAddress.setText(data[2]);
-			}
-		}
-	
-		@Override
-		public void onConnectionFailed(ConnectionResult arg0) {
-			Log.i("Location client", "Connection failed");		
-		}
-
-		@Override
-		public void onConnected(Bundle arg0) {
-			Log.i("Location client", "Connected");
-			// Normally, we will perform the actions here, but from this place we cannot access UI elements
-		}
-
-		@Override
-		public void onDisconnected() {
-			Log.i("Location client", "Disconnected");		
-		}
-
+	@Override
+	public void getCurrentLocation(Location location, String address) {
+		txtLat.setText(location.getLatitude()+"");
+		txtLon.setText(location.getLongitude()+"");
+		txtAddress.setText(address);
 		
 	}
+
 }

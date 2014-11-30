@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/mnu_student_edit" android:title="@string/action_student_edit" android:icon="@drawable/ic_action_edit"></item>
-    <item android:id="@+id/mnu_student_delete" android:title="@string/action_student_delete" android:icon="@drawable/ic_action_discard"></item>
-    <item android:id="@+id/mnu_share" android:actionProviderClass="android.widget.ShareActionProvider" android:title="@string/action_share" android:showAsAction="always"></item>
-    
+
+    <item
+        android:id="@+id/mnu_place_edit"
+        android:icon="@drawable/ic_action_edit"
+        android:title="@string/action_place_edit">
+    </item>
+    <item
+        android:id="@+id/mnu_place_delete"
+        android:icon="@drawable/ic_action_discard"
+        android:title="@string/action_place_delete">
+    </item>
+    <item
+        android:id="@+id/mnu_share"
+        android:actionProviderClass="android.widget.ShareActionProvider"
+        android:showAsAction="always"
+        android:title="@string/action_share">
+    </item>
 
 </menu>

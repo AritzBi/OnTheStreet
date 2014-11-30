@@ -24,17 +24,14 @@ public class NearPlaceService extends Service implements LocationCallback{
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.i("Service", "Start");
-		// Display the notification in the notification area
         GeoLocation geo=new GeoLocation(NearPlaceService.this,getApplicationContext());
         geo.execute();
-		//showNotification(getApplicationContext(), "Activated");	
 		return super.onStartCommand(intent, flags, startId);
 	}
 
 	@Override
 	public void onDestroy() {
 		Log.i("Service", "Stop");
-		// Remove the notification from the notification area
 		removeNotification(getApplicationContext());
 		super.onDestroy();
 	}
@@ -69,9 +66,9 @@ public class NearPlaceService extends Service implements LocationCallback{
 		mNotificationManager.cancel(0);		
 	}
 	@Override
-	public void getCurrentLocation(Location location) {
+	public void getCurrentLocation(Location location, String adress) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		String mynumberPref = sharedPref.getString("pref_key_place_limit", ""); 
+		String mynumberPref = sharedPref.getString("pref_key_distance", ""); 
 		ArrayList<Place>allPlaces=(new PlaceManager(getApplicationContext())).loadPLaces();
 		Place selected=null;
 		double distance=0;

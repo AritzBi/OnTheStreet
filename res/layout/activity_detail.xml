@@ -8,24 +8,22 @@
         android:id="@+id/txtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="normal|bold"
-    	android:textSize="32sp"
-    	android:layout_marginLeft="15dp"
-        />
+        android:layout_marginLeft="15dp"
+        android:textSize="32sp"
+        android:textStyle="normal|bold" />
 
     <TextView
         android:id="@+id/txtDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-         />
-        <TextView
+        android:layout_marginLeft="15dp" />
+
+    <TextView
         android:id="@+id/txtAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:textStyle="normal|bold"
-         />
+        android:textStyle="normal|bold" />
 
     <ImageView
         android:id="@+id/image_icon"

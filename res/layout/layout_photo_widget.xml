@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/imgPhoto"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:src="@drawable/widget_shape" />
 
 </LinearLayout>

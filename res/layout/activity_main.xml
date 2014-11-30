@@ -94,12 +94,6 @@
         android:layout_below="@+id/txtLat"
         android:layout_marginTop="20dp" />
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_alignLeft="@+id/txtAddress"
-        android:layout_below="@+id/txtAddress"
-        android:src="@drawable/ic_action_picture" />
+
 
 </RelativeLayout>

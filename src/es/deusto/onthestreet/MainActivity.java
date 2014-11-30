@@ -1,12 +1,9 @@
 package es.deusto.onthestreet;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.ListActivity;
-import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -94,18 +91,22 @@ public class MainActivity extends ListActivity {
 	    @Override
 	    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 	        switch (item.getItemId()) {
-	            case R.id.mnu_student_edit:
+	            case R.id.mnu_place_edit:
 	                mode.finish(); // Action picked, so close the CAB and execute action
 	        		Intent itemDetailIntent = new Intent(getApplicationContext(), PlaceCreateActivity.class);
 	        		itemDetailIntent.putExtra(Place.PLACE_POSITION, MainActivity.this.getListView().getCheckedItemPosition());
 	        		itemDetailIntent.putExtra(Place.PLACE, arrPlaces.get(MainActivity.this.getListView().getCheckedItemPosition()));
 	        		startActivityForResult(itemDetailIntent, EDIT_ITEM);
 	                return true;
-	            case R.id.mnu_student_delete:
+	            case R.id.mnu_place_delete:
 	                mode.finish(); // Action picked, so close the CAB and execute action
 	                int position=MainActivity.this.getListView().getCheckedItemPosition();
 	                System.out.println(position);
+	                System.out.println(arrPlaces.size());
+	                System.out.println(adpPlaces.getArrPlaces().size());
 	                arrPlaces.remove(position);
+	                System.out.println(arrPlaces.size());
+	                System.out.println(adpPlaces.getArrPlaces().size());
 	                adpPlaces.notifyDataSetChanged();
 	                return true;
 	            default:
