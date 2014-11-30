@@ -26,7 +26,6 @@ import android.widget.ShareActionProvider;
 
 
 public class MainActivity extends ListActivity {
-	static  int SELECT_PLACE=1;
 	public static final int ADD_ITEM = 0;
 	public static final int EDIT_ITEM = 1;
 	public static final int VIEW_ITEM = 2;
@@ -53,7 +52,6 @@ public class MainActivity extends ListActivity {
 
 		        // Important: to marked the editing row as activated
 		        getListView().setItemChecked(position, true);
-		        SELECT_PLACE=position;
 		        // Start the CAB using the ActionMode.Callback defined above
 		        mActionMode = MainActivity.this.startActionMode(mActionModeCallback);
 		        return true;
@@ -99,13 +97,15 @@ public class MainActivity extends ListActivity {
 	            case R.id.mnu_student_edit:
 	                mode.finish(); // Action picked, so close the CAB and execute action
 	        		Intent itemDetailIntent = new Intent(getApplicationContext(), PlaceCreateActivity.class);
-	        		itemDetailIntent.putExtra(Place.PLACE_POSITION, SELECT_PLACE);
-	        		itemDetailIntent.putExtra(Place.PLACE, arrPlaces.get(SELECT_PLACE));
+	        		itemDetailIntent.putExtra(Place.PLACE_POSITION, MainActivity.this.getListView().getCheckedItemPosition());
+	        		itemDetailIntent.putExtra(Place.PLACE, arrPlaces.get(MainActivity.this.getListView().getCheckedItemPosition()));
 	        		startActivityForResult(itemDetailIntent, EDIT_ITEM);
 	                return true;
 	            case R.id.mnu_student_delete:
 	                mode.finish(); // Action picked, so close the CAB and execute action
-	                arrPlaces.remove(SELECT_PLACE);
+	                int position=MainActivity.this.getListView().getCheckedItemPosition();
+	                System.out.println(position);
+	                arrPlaces.remove(position);
 	                adpPlaces.notifyDataSetChanged();
 	                return true;
 	            default:
@@ -212,11 +212,11 @@ public class MainActivity extends ListActivity {
 			if(resultCode == Activity.RESULT_OK){
 				Place place=(Place)data.getExtras().getSerializable(Place.PLACE);
 				arrPlaces.add(place);
+				adpPlaces.getAllPlaces().add(place);
 				adpPlaces.notifyDataSetChanged();
 			}		
 		}else if(requestCode == EDIT_ITEM || requestCode == VIEW_ITEM){ // If it was an EDIT_ITEM, replace the selected item and update the list
 			if(resultCode == Activity.RESULT_OK ){
-				System.out.println("PASO POR AQUI");
 				Place place=(Place)data.getExtras().getSerializable(Place.PLACE);
 				int position=(Integer)data.getExtras().getSerializable(Place.PLACE_POSITION);
 				arrPlaces.set(position, place);

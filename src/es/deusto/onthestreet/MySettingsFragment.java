@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
@@ -22,6 +24,10 @@ public class MySettingsFragment extends PreferenceFragment implements OnSharedPr
         
         // Register for changes in preferences
         PreferenceManager.getDefaultSharedPreferences(getActivity()).registerOnSharedPreferenceChangeListener(this);
+        ListPreference editTextPref = (ListPreference) findPreference("pref_key_place_limit");
+        String meters=PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("pref_key_place_limit", "");
+        editTextPref
+                .setSummary("Number of meters: "+meters);
         
 		
         

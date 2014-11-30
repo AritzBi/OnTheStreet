@@ -104,6 +104,7 @@ public class MyCustomAdapter extends BaseAdapter implements Filterable,LocationC
 	}
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		System.out.println("Position en acapter: "+position);
 	    View view = convertView;
 	    if (view == null) {
 	        LayoutInflater mInflater = (LayoutInflater) context

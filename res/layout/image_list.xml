@@ -10,6 +10,8 @@
         android:layout_height="100dp"
     android:layout_alignParentLeft="true"
     android:layout_alignParentTop="true" 
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp"
     android:src="@drawable/ic_action_picture"
 	 />
 

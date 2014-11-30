@@ -55,6 +55,7 @@ public class PlaceCreateActivity extends Activity {
 			edtName.setText(place.getName());
 			txtLat.setText(place.getLat()+"");
 			txtLon.setText(place.getLon()+"");
+			txtAddress.setText(place.getAddress());
 		}else{
 			place=new Place();
 		}
@@ -75,27 +76,34 @@ public class PlaceCreateActivity extends Activity {
 		// If changes OK, return new value in the result Intent back to the
 		// calling activity
 		case R.id.action_item_accept:
-			String description = ((EditText) findViewById(R.id.edtItemDescription))
+			EditText txtDescription=((EditText) findViewById(R.id.edtItemDescription));
+			EditText txtName=((EditText) findViewById(R.id.edtItemName));
+			String description = txtDescription
 					.getText().toString();
-			String name = ((EditText) findViewById(R.id.edtItemName))
+			String name = txtName
 					.getText().toString();
+			if( txtLat.getText().toString().trim().equals("") ||txtLon.getText().toString().trim().equals("") || description.trim().equals("")| name.trim().equals(""))
+			 {    
+				Toast.makeText(getApplicationContext(), "A required field is empty", Toast.LENGTH_SHORT).show();
+			 }else{
 
-			place.setDescription(description);
-			place.setLat(Double.parseDouble(txtLat.getText().toString()));
-			place.setLon(Double.parseDouble(txtLon.getText().toString()));
-			place.setAddress(txtAddress.getText().toString());
-			place.setName(name);
-			if(file !=null){
-				place.setUri(getRealPathFromURI(Uri.fromFile(file)));;
-			}else{
-				place.setUri("unknown.jpg");
-			}
-			Intent intentResult = new Intent();
-			intentResult.putExtra(Place.PLACE, place);
-			if(editPosition!=null)
-				intentResult.putExtra(Place.PLACE_POSITION, editPosition);
-			setResult(Activity.RESULT_OK, intentResult);
-			finish();
+					place.setDescription(description);
+					place.setLat(Double.parseDouble(txtLat.getText().toString()));
+					place.setLon(Double.parseDouble(txtLon.getText().toString()));
+					place.setAddress(txtAddress.getText().toString());
+					place.setName(name);
+					if(file !=null){
+						place.setUri(getRealPathFromURI(Uri.fromFile(file)));;
+					}else{
+						place.setUri("unknown.jpg");
+					}
+					Intent intentResult = new Intent();
+					intentResult.putExtra(Place.PLACE, place);
+					if(editPosition!=null)
+						intentResult.putExtra(Place.PLACE_POSITION, editPosition);
+					setResult(Activity.RESULT_OK, intentResult);
+					finish();
+			 }
 			break;
 
 		// If cancel, simply return back

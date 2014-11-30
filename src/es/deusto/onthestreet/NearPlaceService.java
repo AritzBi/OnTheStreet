@@ -25,7 +25,6 @@ public class NearPlaceService extends Service implements LocationCallback{
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.i("Service", "Start");
 		// Display the notification in the notification area
-		System.out.println("empieza");
         GeoLocation geo=new GeoLocation(NearPlaceService.this,getApplicationContext());
         geo.execute();
 		//showNotification(getApplicationContext(), "Activated");	
